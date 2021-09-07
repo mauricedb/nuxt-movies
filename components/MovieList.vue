@@ -2,8 +2,8 @@
   <div>
     <h2>{{ title }}</h2>
     <div>
-      <div v-if="error">{{ error }}</div>
-      <div v-else-if="loading">Loading...</div>
+      <div v-if="$fetchState.error">{{ $fetchState.error.message }}</div>
+      <div v-else-if="$fetchState.pending">Loading...</div>
       <v-row v-else>
         <MovieCard
           v-for="movie in movies"
@@ -39,35 +39,17 @@ export default {
   },
   data() {
     return {
-      error: null,
-      loading: true,
       movies: [],
     }
   },
-  watch: {
-    moviesUrl() {
-      this.fetchMovies()
-    },
-  },
-  mounted() {
-    this.fetchMovies()
-  },
-  methods: {
-    async fetchMovies() {
-      try {
-        const rsp = await fetch(this.moviesUrl)
+  async fetch() {
+    const rsp = await fetch(this.moviesUrl)
 
-        if (rsp.ok) {
-          this.movies = await rsp.json()
-        } else {
-          this.error = rsp.statusText ?? 'Failed to load data'
-        }
-      } catch (error) {
-        this.error = error?.message ?? 'Failed to load data'
-      } finally {
-        this.loading = false
-      }
-    },
+    if (rsp.ok) {
+      this.movies = await rsp.json()
+    } else {
+      throw new Error(rsp.statusText ?? 'Failed to load data')
+    }
   },
 }
 </script>
