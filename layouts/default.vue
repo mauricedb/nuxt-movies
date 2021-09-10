@@ -76,6 +76,10 @@ export default {
           to: '/',
         },
         {
+          title: 'Top Rated Movies',
+          to: '/top-rated-movies',
+        },
+        {
           title: 'Popular Movies',
           to: '/popular-movies',
         },
