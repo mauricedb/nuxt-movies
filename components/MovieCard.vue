@@ -1,11 +1,10 @@
 <template>
   <v-card elevation="3" class="mx-auto my-3" max-width="500">
-    <nuxt-link :to="{ name: 'movie-type-id', params: { id: movie.id, type } }">
+    <nuxt-link
+      :to="{ name: 'movie-details-type-id', params: { id: movie.id, type } }"
+    >
       <v-img :src="imageUrl" height="281" width="500" />
       {{ movie.title }}
-      <!-- <span :title="movie.vote_average">
-        ({{ movie.vote_average | stars }})
-      </span> -->
       <v-rating
         :value="movie.vote_average / 2"
         :title="movie.vote_average"
